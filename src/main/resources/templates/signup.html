@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Sign up | Nix</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="css/signup.css" rel="stylesheet">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+<body>
+<div class="container">
+    <form role="form" action="#" th:object="${signupForm}"
+          class="form-signin text-center"
+          th:method="post" th:action="@{/signup}">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+             role="alert" align="left">
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+                    Input is incorrect
+                </li>
+            </ul>
+        </div>
+        <div th:if="${existsError != null}" class="alert alert-danger"
+             role="alert">
+            <p th:text="${existsError}">Input is incorrect</p>
+        </div>
+        <h1 class="h3 mb-3 font-weight-normal text">Create account</h1>
+        <label for="inputLogin" class="sr-only">Login</label>
+        <input name="login" th:field="*{login}" type="text" id="inputLogin"
+               class="form-control"
+               placeholder="Login" required autofocus/>
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input name="email" th:field="*{email}" type="email" id="inputEmail"
+               class="form-control"
+               placeholder="Email" required/>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" th:field="*{password}" type="password"
+               id="inputPassword"
+               class="form-control" placeholder="Password"
+               required/>
+        <label for="inputPasswordAgain" class="sr-only">Password
+            again</label>
+        <input name="passwordAgain" th:field="*{passwordAgain}"
+               type="password"
+               id="inputPasswordAgain"
+               class="form-control"
+               placeholder="Password again" required/>
+        <label for="inputFirstName" class="sr-only">First name</label>
+        <input name="firstName" th:field="*{firstName}" type="text"
+               id="inputFirstName"
+               class="form-control" placeholder="First name"
+               required/>
+        <label for="inputLastName" class="sr-only">Last name</label>
+        <input name="lastName" th:field="*{lastName}" type="text"
+               id="inputLastName"
+               class="form-control" placeholder="Last name"
+               required/>
+        <label for="inputBirthday" class="sr-only">Birthday</label>
+        <input name="birthday" th:field="*{birthday}" type="text"
+               id="inputBirthday"
+               class="form-control" placeholder="Birthday(yyyy-mm-dd)"
+               required/>
+        <br>
+        <div class="g-recaptcha"
+             data-sitekey="6Ld5PWUUAAAAAORfJ2y0bOO2AkZqJ97riEw31-s2"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign
+            up
+        </button>
+        <br>
+        <p>Already have an account? <a href="/login">Sign in</a></p>
+        <p class="mt-5 mb-3 text-muted">&copy;Nemo65307 2018</p>
+    </form>
+</div>
+<div th:replace="fragments/js.html :: js"></div>
+</body>
+</html>

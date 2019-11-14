@@ -1,0 +1,34 @@
+<button type="button" class="btn btn-primary" (click)="redirectNewUserPage()">
+  Add new user
+</button>
+<table class="table">
+  <thead class="thead-light text-center">
+  <tr>
+    <th scope="col">Login</th>
+    <th scope="col">First Name</th>
+    <th scope="col">Last Name</th>
+    <th scope="col">Age</th>
+    <th scope="col">Role</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users" class="text-center">
+    <th scope="row">{{user.login}}</th>
+    <td>{{user.firstName}}</td>
+    <td>{{user.lastName}}</td>
+    <td>{{getAge(user.birthday)}}</td>
+    <td>{{user.role.name}}</td>
+    <td>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-secondary"
+                (click)="editUserPage(user)">Edit
+        </button>
+        <button type="button" class="btn btn-secondary"
+                (click)="deleteUser(user)">Delete
+        </button>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>

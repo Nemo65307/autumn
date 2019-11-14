@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <div th:replace="fragments/css.html :: css"></div>
+    <title>Admin Panel</title>
+    <base href="/">
+</head>
+<body>
+<div th:replace="fragments/header.html :: header"></div>
+<noscript>
+    You need to enable JavaScript to run this app.
+</noscript>
+<main>
+    <div class="container">
+        <app-root></app-root>
+    </div>
+</main>
+<div th:replace="fragments/footer.html :: footer"></div>
+<div th:replace="fragments/js.html :: js"></div>
+<script type="text/javascript" src="/js/runtime.js"></script>
+<script type="text/javascript" src="/js/polyfills.js"></script>
+<script type="text/javascript" src="/js/styles.js"></script>
+<script type="text/javascript" src="/js/vendor.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
