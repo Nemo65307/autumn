@@ -18,7 +18,7 @@ public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
         register(UserResource.class);
         register(RoleResource.class);
-        
+
         register(AccessForbiddenMapper.class);
         register(ConflictExceptionMapper.class);
         register(DefaultExceptionMapper.class);

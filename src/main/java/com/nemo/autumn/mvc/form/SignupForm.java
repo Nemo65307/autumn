@@ -116,7 +116,6 @@ public class SignupForm {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(login, email, password, passwordAgain, firstName,
                 lastName, birthday);
     }

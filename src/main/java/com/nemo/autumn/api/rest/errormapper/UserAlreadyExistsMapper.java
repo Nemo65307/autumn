@@ -16,11 +16,11 @@ public class UserAlreadyExistsMapper
 
     @Override
     public Response toResponse(UserAlreadyExistsException exception) {
-        return Response.
-                               status(CONFLICT).
-                               entity(new ErrorMessage(exception.getMessage())).
-                               type(MediaType.APPLICATION_JSON).
-                               build();
+        return Response
+                .status(CONFLICT)
+                .entity(new ErrorMessage(exception.getMessage()))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }

@@ -6,6 +6,8 @@ import com.nemo.autumn.domain.User;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toCollection;
+
 public final class DtoEntityAdapter {
 
     public static UserDto convert(User user) {
@@ -15,11 +17,9 @@ public final class DtoEntityAdapter {
     }
 
     public static List<UserDto> convert(List<User> userList) {
-        List<UserDto> jsonList = new LinkedList<>();
-        for (User user : userList) {
-            jsonList.add(convert(user));
-        }
-        return jsonList;
+        return userList.stream()
+                .map(DtoEntityAdapter::convert)
+                .collect(toCollection(LinkedList::new));
     }
 
     public static User convert(UserDto userDto) {

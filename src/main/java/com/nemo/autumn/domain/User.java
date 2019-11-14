@@ -32,7 +32,7 @@ public class User {
     }
 
     public User(String id, String login, String password, String email,
-            String firstName, String lastName, Date birthday, Role role) {
+                String firstName, String lastName, Date birthday, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;

@@ -25,8 +25,7 @@ public class CXFConfig {
 
     @Bean
     public Endpoint endpoint() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(),
-                soapUserService());
+        EndpointImpl endpoint = new EndpointImpl(springBus(), soapUserService());
         endpoint.publish("/user");
         return endpoint;
     }

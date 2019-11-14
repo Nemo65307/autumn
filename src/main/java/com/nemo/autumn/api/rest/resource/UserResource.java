@@ -32,12 +32,15 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.Set;
 
+import static javax.ws.rs.core.Response.Status.ACCEPTED;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.CREATED;
+import static javax.ws.rs.core.Response.Status.OK;
 
 @Component
 @Path("/user")
-@Produces({ MediaType.APPLICATION_JSON })
-@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({MediaType.APPLICATION_JSON})
+@Consumes({MediaType.APPLICATION_JSON})
 public class UserResource {
 
     private UserService userService;
@@ -50,15 +53,17 @@ public class UserResource {
     @GET
     @Path("/all")
     public List<UserDto> getAllUsers() {
-        return DtoEntityAdapter.convert(userService.findAllUsers());
+        List<User> allUsers = userService.findAllUsers();
+        return DtoEntityAdapter.convert(allUsers);
     }
 
     @GET
     @Path("/{id}")
     public UserDto getUser(@PathParam("id") String id) {
         User user = userService.retrieveUserById(id);
-        if (user == null)
+        if (user == null) {
             throw new UserNotFoundException("User not found by ID");
+        }
         return DtoEntityAdapter.convert(user);
     }
 
@@ -70,7 +75,7 @@ public class UserResource {
             throw new UserNotFoundException("User not found by ID");
         }
         userService.deleteUser(user.getId());
-        return Response.status(Response.Status.OK.getStatusCode()).build();
+        return Response.status(OK).build();
     }
 
     @POST
@@ -81,11 +86,11 @@ public class UserResource {
             ValidationResult validationResult = ConstraintValidationConverter.convert(
                     violations);
             return Response.status(BAD_REQUEST)
-                           .entity(validationResult)
-                           .build();
+                    .entity(validationResult)
+                    .build();
         }
         userService.createUser(DtoEntityAdapter.convert(user));
-        return Response.status(Response.Status.CREATED.getStatusCode()).build();
+        return Response.status(CREATED).build();
     }
 
     @PUT
@@ -93,24 +98,23 @@ public class UserResource {
     public Response updateUser(UserDto user, @PathParam("id") String id) {
         Set<ConstraintViolation<UserDto>> violations = validate(user);
         if (!violations.isEmpty()) {
-            if (!((violations.size() == 1) && user.getPassword().isEmpty())) {
+            if (!(violations.size() == 1 && user.getPassword().isEmpty())) {
                 ValidationResult validationResult = ConstraintValidationConverter
                         .convert(violations);
                 return Response.status(BAD_REQUEST)
-                               .entity(validationResult)
-                               .build();
+                        .entity(validationResult)
+                        .build();
             }
         }
         if (!id.equals(String.valueOf(user.getId()))) {
             throw new ConflictException("Ids don't match!");
         }
-        if (userService.retrieveUserById(String.valueOf(user.getId()))
-                == null) {
+        User retrievedUser = userService.retrieveUserById(String.valueOf(user.getId()));
+        if (retrievedUser == null) {
             throw new UserNotFoundException("User not found by ID");
         }
         userService.updateUser(DtoEntityAdapter.convert(user));
-        return Response.status(Response.Status.ACCEPTED.getStatusCode())
-                       .build();
+        return Response.status(ACCEPTED).build();
     }
 
     private Set<ConstraintViolation<UserDto>> validate(UserDto user) {

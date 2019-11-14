@@ -16,11 +16,11 @@ public class UserNotFoundMapper
 
     @Override
     public Response toResponse(UserNotFoundException exception) {
-        return Response.
-                               status(NOT_FOUND).
-                               entity(new ErrorMessage(exception.getMessage())).
-                               type(MediaType.APPLICATION_JSON).
-                               build();
+        return Response
+                .status(NOT_FOUND)
+                .entity(new ErrorMessage(exception.getMessage()))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }

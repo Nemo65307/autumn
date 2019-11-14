@@ -20,11 +20,11 @@ public class JaxRsExceptionMapper
     @Override
     public Response toResponse(WebApplicationException exception) {
         logError(exception);
-        return Response.
-                               status(exception.getResponse().getStatusInfo()).
-                               entity(new ErrorMessage(exception.getMessage())).
-                               type(MediaType.APPLICATION_JSON).
-                               build();
+        return Response
+                .status(exception.getResponse().getStatusInfo())
+                .entity(new ErrorMessage(exception.getMessage()))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
     private void logError(WebApplicationException exception) {

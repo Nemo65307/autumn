@@ -14,8 +14,8 @@ import java.util.List;
 
 @Component
 @Path("/role")
-@Produces({ MediaType.APPLICATION_JSON })
-@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({MediaType.APPLICATION_JSON})
+@Consumes({MediaType.APPLICATION_JSON})
 public class RoleResource {
 
     private final RoleService roleService;

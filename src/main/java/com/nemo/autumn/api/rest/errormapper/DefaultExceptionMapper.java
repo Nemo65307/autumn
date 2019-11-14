@@ -20,14 +20,11 @@ public class DefaultExceptionMapper implements ExceptionMapper<Throwable> {
     @Override
     public Response toResponse(Throwable exception) {
         logger.error(exception.getMessage(), exception);
-        return Response.
-                               status(INTERNAL_SERVER_ERROR)
-                       .
-                               entity(new ErrorMessage("Internal server error"))
-                       .
-                               type(MediaType.APPLICATION_JSON)
-                       .
-                               build();
+        return Response
+                .status(INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage("Internal server error"))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }

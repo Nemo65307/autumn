@@ -31,8 +31,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = { "spring.datasource.url = jdbc:h2:mem:test",
-        "spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.H2Dialect" })
+@TestPropertySource(properties = {"spring.datasource.url = jdbc:h2:mem:test",
+        "spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.H2Dialect"})
 public class UserResourceTest {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -48,10 +48,10 @@ public class UserResourceTest {
         when(userService.findAllUsers()).thenReturn(
                 Collections.singletonList(existingUser));
         this.webClient.get()
-                      .uri("/api/rest/user/all")
-                      .exchange()
-                      .expectStatus()
-                      .isOk();
+                .uri("/api/rest/user/all")
+                .exchange()
+                .expectStatus()
+                .isOk();
     }
 
     @Test
@@ -59,10 +59,10 @@ public class UserResourceTest {
         User existingUser = createUser();
         when(userService.retrieveUserById("999")).thenReturn(existingUser);
         this.webClient.get()
-                      .uri("/api/rest/user/999")
-                      .exchange()
-                      .expectStatus()
-                      .isOk();
+                .uri("/api/rest/user/999")
+                .exchange()
+                .expectStatus()
+                .isOk();
 
     }
 
@@ -70,10 +70,10 @@ public class UserResourceTest {
     public void givenGetUser_whenUserDoesNotExist_thenResponseNotFound() {
         when(userService.retrieveUserById("-1")).thenReturn(null);
         this.webClient.get()
-                      .uri("/api/rest/user/-1")
-                      .exchange()
-                      .expectStatus()
-                      .isNotFound();
+                .uri("/api/rest/user/-1")
+                .exchange()
+                .expectStatus()
+                .isNotFound();
     }
 
     @Test
@@ -81,11 +81,11 @@ public class UserResourceTest {
         User existingUser = createUser();
         when(userService.retrieveUserById("999")).thenReturn(existingUser);
         EntityExchangeResult<UserDto> retrievedUser = this.webClient.get()
-                                                                    .uri("/api/rest/user/999")
-                                                                    .exchange()
-                                                                    .expectBody(
-                                                                            UserDto.class)
-                                                                    .returnResult();
+                .uri("/api/rest/user/999")
+                .exchange()
+                .expectBody(
+                        UserDto.class)
+                .returnResult();
         assertEquals(existingUser.getId(),
                 String.valueOf(retrievedUser.getResponseBody().getId()));
         assertEquals(existingUser.getLogin(),
@@ -101,20 +101,20 @@ public class UserResourceTest {
         doNothing().when(userService).deleteUser(anyString());
         doNothing().when(userService).deleteUser(any(User.class));
         this.webClient.delete()
-                      .uri("/api/rest/user/999")
-                      .exchange()
-                      .expectStatus()
-                      .isOk();
+                .uri("/api/rest/user/999")
+                .exchange()
+                .expectStatus()
+                .isOk();
     }
 
     @Test
     public void givenDeleteUser_whenUserDoesNotExists_thenResponseNotFound() {
         when(userService.retrieveUserById("-1")).thenReturn(null);
         this.webClient.delete()
-                      .uri("/api/rest/user/-1")
-                      .exchange()
-                      .expectStatus()
-                      .isNotFound();
+                .uri("/api/rest/user/-1")
+                .exchange()
+                .expectStatus()
+                .isNotFound();
     }
 
     @Test
@@ -124,11 +124,11 @@ public class UserResourceTest {
         UserDto userDto = convertToUserDto(validUser);
         doNothing().when(userService).createUser(any(User.class));
         this.webClient.post()
-                      .uri("/api/rest/user")
-                      .body(BodyInserters.fromObject(userDto))
-                      .exchange()
-                      .expectStatus()
-                      .isCreated();
+                .uri("/api/rest/user")
+                .body(BodyInserters.fromObject(userDto))
+                .exchange()
+                .expectStatus()
+                .isCreated();
     }
 
     @Test
@@ -137,13 +137,13 @@ public class UserResourceTest {
         User validUser = createUser();
         UserDto userDto = convertToUserDto(validUser);
         doThrow(UserAlreadyExistsException.class).when(userService)
-                                                 .createUser(any(User.class));
+                .createUser(any(User.class));
         this.webClient.post()
-                      .uri("/api/rest/user")
-                      .body(BodyInserters.fromObject(userDto))
-                      .exchange()
-                      .expectStatus()
-                      .isEqualTo(Response.Status.CONFLICT.getStatusCode());
+                .uri("/api/rest/user")
+                .body(BodyInserters.fromObject(userDto))
+                .exchange()
+                .expectStatus()
+                .isEqualTo(Response.Status.CONFLICT.getStatusCode());
     }
 
     @Test
@@ -154,11 +154,11 @@ public class UserResourceTest {
         UserDto userDto = convertToUserDto(user);
         doNothing().when(userService).createUser(any(User.class));
         this.webClient.post()
-                      .uri("/api/rest/user")
-                      .body(BodyInserters.fromObject(userDto))
-                      .exchange()
-                      .expectStatus()
-                      .isBadRequest();
+                .uri("/api/rest/user")
+                .body(BodyInserters.fromObject(userDto))
+                .exchange()
+                .expectStatus()
+                .isBadRequest();
     }
 
     @Test
@@ -179,14 +179,14 @@ public class UserResourceTest {
                 validationResult.getResponseBody().getMessage());
         assertEquals(1, validationResult.getResponseBody().getItems().size());
         assertEquals("password", validationResult.getResponseBody()
-                                                 .getItems()
-                                                 .get(0)
-                                                 .getField());
+                .getItems()
+                .get(0)
+                .getField());
         assertEquals(3, validationResult.getResponseBody()
-                                        .getItems()
-                                        .get(0)
-                                        .getMessages()
-                                        .size());
+                .getItems()
+                .get(0)
+                .getMessages()
+                .size());
     }
 
     @Test
@@ -195,14 +195,14 @@ public class UserResourceTest {
         UserDto userDto = convertToUserDto(validUser);
         userDto.setId(validUser.getId());
         doReturn(validUser).when(userService)
-                           .retrieveUserById(validUser.getId());
+                .retrieveUserById(validUser.getId());
         doNothing().when(userService).updateUser(any(User.class));
         this.webClient.put()
-                      .uri("/api/rest/user/" + validUser.getId())
-                      .body(BodyInserters.fromObject(userDto))
-                      .exchange()
-                      .expectStatus()
-                      .isAccepted();
+                .uri("/api/rest/user/" + validUser.getId())
+                .body(BodyInserters.fromObject(userDto))
+                .exchange()
+                .expectStatus()
+                .isAccepted();
     }
 
     @Test
@@ -213,11 +213,11 @@ public class UserResourceTest {
         doReturn(null).when(userService).retrieveUserById(validUser.getId());
         doNothing().when(userService).updateUser(any(User.class));
         this.webClient.put()
-                      .uri("/api/rest/user/" + validUser.getId())
-                      .body(BodyInserters.fromObject(userDto))
-                      .exchange()
-                      .expectStatus()
-                      .isNotFound();
+                .uri("/api/rest/user/" + validUser.getId())
+                .body(BodyInserters.fromObject(userDto))
+                .exchange()
+                .expectStatus()
+                .isNotFound();
     }
 
     @Test
@@ -227,11 +227,11 @@ public class UserResourceTest {
         userDto.setId("-1");
         doNothing().when(userService).updateUser(any(User.class));
         this.webClient.put()
-                      .uri("/api/rest/user/" + validUser.getId())
-                      .body(BodyInserters.fromObject(userDto))
-                      .exchange()
-                      .expectStatus()
-                      .isEqualTo(Response.Status.CONFLICT.getStatusCode());
+                .uri("/api/rest/user/" + validUser.getId())
+                .body(BodyInserters.fromObject(userDto))
+                .exchange()
+                .expectStatus()
+                .isEqualTo(Response.Status.CONFLICT.getStatusCode());
     }
 
     @Test
@@ -241,14 +241,14 @@ public class UserResourceTest {
         UserDto userDto = convertToUserDto(invalidUser);
         userDto.setId(invalidUser.getId());
         doReturn(invalidUser).when(userService)
-                             .retrieveUserById(invalidUser.getId());
+                .retrieveUserById(invalidUser.getId());
         doNothing().when(userService).updateUser(any(User.class));
         this.webClient.put()
-                      .uri("/api/rest/user/" + invalidUser.getId())
-                      .body(BodyInserters.fromObject(userDto))
-                      .exchange()
-                      .expectStatus()
-                      .isBadRequest();
+                .uri("/api/rest/user/" + invalidUser.getId())
+                .body(BodyInserters.fromObject(userDto))
+                .exchange()
+                .expectStatus()
+                .isBadRequest();
     }
 
     @Test
@@ -258,7 +258,7 @@ public class UserResourceTest {
         UserDto userDto = convertToUserDto(invalidUser);
         userDto.setId(invalidUser.getId());
         doReturn(invalidUser).when(userService)
-                             .retrieveUserById(invalidUser.getId());
+                .retrieveUserById(invalidUser.getId());
         doNothing().when(userService).updateUser(any(User.class));
         EntityExchangeResult<ValidationResult> validationResult = this.webClient
                 .put()
@@ -271,14 +271,14 @@ public class UserResourceTest {
                 validationResult.getResponseBody().getMessage());
         assertEquals(1, validationResult.getResponseBody().getItems().size());
         assertEquals("password", validationResult.getResponseBody()
-                                                 .getItems()
-                                                 .get(0)
-                                                 .getField());
+                .getItems()
+                .get(0)
+                .getField());
         assertEquals(3, validationResult.getResponseBody()
-                                        .getItems()
-                                        .get(0)
-                                        .getMessages()
-                                        .size());
+                .getItems()
+                .get(0)
+                .getMessages()
+                .size());
     }
 
     private User createUser() {

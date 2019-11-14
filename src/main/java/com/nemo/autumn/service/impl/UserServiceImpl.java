@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
-            RoleRepository roleRepository) {
+                           RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
@@ -149,7 +149,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //default role
         if (role == null || (role.getName() == null && role.getId() == null)) {
             role = roleRepository.findByName("user")
-                                 .orElseThrow(ConflictException::new);
+                    .orElseThrow(ConflictException::new);
         }
         return role;
     }

@@ -16,12 +16,11 @@ public class JsonMappingExceptionMapper
 
     @Override
     public Response toResponse(JsonMappingException exception) {
-        return Response.
-                               status(BAD_REQUEST).
-                               entity(new ErrorMessage(
-                                       "Couldn't process the json")).
-                               type(MediaType.APPLICATION_JSON).
-                               build();
+        return Response
+                .status(BAD_REQUEST)
+                .entity(new ErrorMessage("Couldn't process the json"))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }

@@ -19,18 +19,15 @@ import javax.xml.ws.soap.SOAPFaultException;
 @Component
 public class ExceptionMapperAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            ExceptionMapperAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperAspect.class);
 
     @Around("execution(* com.nemo.autumn.api.soap.service.SoapUserServiceImpl.*(..))")
-    public Object aroundProcessImageResource(ProceedingJoinPoint jp)
-            throws Exception {
+    public Object aroundProcessImageResource(ProceedingJoinPoint jp) throws Exception {
         validateParameters(jp.getArgs());
         try {
             return jp.proceed();
         } catch (Throwable e) {
-            if (e instanceof BusinessException
-                    || e instanceof ValidationException) {
+            if (e instanceof BusinessException || e instanceof ValidationException) {
                 logger.warn("Ws request failed: {0}", e.getMessage());
                 throw new SOAPFaultException(
                         createSOAPFault(e.getMessage(), true));

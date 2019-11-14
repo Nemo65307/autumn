@@ -14,26 +14,22 @@ import java.util.Set;
 
 public final class ConstraintValidationConverter {
 
-    public static <T> ValidationResult convert(
-            Set<ConstraintViolation<T>> violations) {
+    public static <T> ValidationResult convert(Set<ConstraintViolation<T>> violations) {
         Map<String, List<String>> listMap = new LinkedHashMap<>();
-        for (ConstraintViolation<T> violation : violations) {
+        violations.forEach(violation -> {
             for (Path.Node node : violation.getPropertyPath()) {
                 List<String> list = listMap.computeIfAbsent(node.getName(),
                         k -> new ArrayList<>());
                 list.add(violation.getMessage());
             }
-        }
+        });
         return createValidationResult(listMap);
     }
 
-    private static ValidationResult createValidationResult(
-            Map<String, List<String>> listMap) {
+    private static ValidationResult createValidationResult(Map<String, List<String>> listMap) {
         List<ValidationItem> list = new ArrayList<>();
-        for (Map.Entry<String, List<String>> entry : Collections.unmodifiableMap(
-                listMap).entrySet()) {
-            list.add(new ValidationItem(entry.getKey(), entry.getValue()));
-        }
+        Collections.unmodifiableMap(listMap).forEach((key, value) ->
+                list.add(new ValidationItem(key, value)));
         return new ValidationResult(list);
     }
 

@@ -26,12 +26,12 @@ public class CommonController {
 
     @Autowired
     public CommonController(UserService userService,
-            CaptchaService captchaService) {
+                            CaptchaService captchaService) {
         this.userService = userService;
         this.captchaService = captchaService;
     }
 
-    @RequestMapping(value = { "", "/", "/index*" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"", "/", "/index*"}, method = RequestMethod.GET)
     public String index() {
         return "redirect:/login";
     }
@@ -72,8 +72,7 @@ public class CommonController {
             HttpServletRequest request) {
         String response = request.getParameter("g-recaptcha-response");
         if (!captchaService.isCaptchaValid(response)) { // checking captcha
-            model.addAttribute("existsError",
-                    "There was a problem with captcha!");
+            model.addAttribute("existsError", "There was a problem with captcha!");
             return "signup";
         }
         if (bindingResult.hasErrors()) { // validating form

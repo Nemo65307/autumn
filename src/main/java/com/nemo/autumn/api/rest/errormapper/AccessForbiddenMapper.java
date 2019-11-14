@@ -16,11 +16,11 @@ public class AccessForbiddenMapper
 
     @Override
     public Response toResponse(AccessForbiddenException exception) {
-        return Response.
-                               status(FORBIDDEN).
-                               entity(new ErrorMessage(exception.getMessage())).
-                               type(MediaType.APPLICATION_JSON).
-                               build();
+        return Response
+                .status(FORBIDDEN)
+                .entity(new ErrorMessage(exception.getMessage()))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }

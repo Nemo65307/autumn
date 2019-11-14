@@ -50,8 +50,7 @@ public class SoapUserServiceImpl implements SoapUserService {
     }
 
     @Override
-    public ValidationResult createUser(UserDto user)
-            throws UserAlreadyExistsException {
+    public ValidationResult createUser(UserDto user) throws UserAlreadyExistsException {
         Set<ConstraintViolation<UserDto>> violations = validate(user);
         if (!violations.isEmpty()) {
             return ConstraintValidationConverter.convert(violations);

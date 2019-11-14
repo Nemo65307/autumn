@@ -11,7 +11,7 @@ public final class SecurityUtil {
 
     public static CurrentUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext()
-                                                             .getAuthentication();
+                .getAuthentication();
         if (authentication == null) {
             return null;
         }
